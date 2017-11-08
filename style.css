@@ -1,0 +1,10 @@
+#canvas{
+    background-color: pink;
+}
+#canvas-root{
+    margin-left: -250px;
+    padding-left: 50%;
+}
+body{
+    background-color: black;
+}
