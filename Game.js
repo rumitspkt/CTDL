@@ -144,6 +144,7 @@ class MyStack {
         return true;
     }
 }
+// </DataStructure>
 class Gach {
     constructor(value, x, y) {
         this.value = value;
@@ -151,7 +152,6 @@ class Gach {
         this.posY = y;
     }
 }
-// </DataStructure>
 
 var btnUndo = document.getElementById("btn");
 var canvas = document.getElementById("canvas");
@@ -159,7 +159,7 @@ var ctx = canvas.getContext("2d");
 var list = new MyLinkedList();
 var stack = new MyStack();
 var size = 4;
-var widthCell = canvas.width / 4 - 20;
+var widthCell = canvas.width / size - 20;
 var endGame = false;
 var allowed = true;
 
@@ -188,7 +188,9 @@ btnUndo.onclick = function(){
     if(stack.size < 2){
         return;
     }
-
+    if(endGame){
+        endGame = false;
+    }
     stack.pop();
     var str = stack.top();
     console.log(str);
@@ -200,8 +202,8 @@ btnUndo.onclick = function(){
 
 function startGame() {
     makeListGach();
-    random();
-    random();
+    //random();
+    //random();
     stack.push(toString());
     drawAllGach();
 }
@@ -221,7 +223,7 @@ function drawGach(gach) {
     ctx.beginPath();
     ctx.rect(gach.posX, gach.posY, widthCell, widthCell);
     switch (gach.value) {
-        case 0: ctx.fillStyle = "#ff5e5e"; break;
+        case 0: ctx.fillStyle = "#d6c7cb"; break;
         case 2: ctx.fillStyle = "#ffa65e"; break;
         case 4: ctx.fillStyle = "#ffee5e"; break;
         case 8: ctx.fillStyle = "#83ff5e"; break;
@@ -235,8 +237,12 @@ function drawGach(gach) {
         case 2048: ctx.fillStyle = "#4700ef"; break;
     }
     ctx.fill();
+    if(gach.value != 0){
+        ctx.lineWidth = 3;
+        ctx.strokeRect(gach.posX + 2, gach.posY + 2, widthCell - 4, widthCell - 4);
+    }
     if (gach.value != 0) {
-        ctx.font = widthCell / 2 + "px Lobster";
+        ctx.font = widthCell / 2 - 20 + "px Audiowide";
         ctx.fillStyle = "black";
         ctx.textAlign = "center";
         ctx.fillText(gach.value, gach.posX + widthCell / 2, gach.posY + widthCell / 2 + 12); //debug graphic
@@ -249,12 +255,17 @@ function drawAllGach() {
     }
 }
 
+
 function makeListGach() {
     for (var i = 0; i < size; i++) {
         for (var j = 0; j < size; j++) {
-            list.addLast(new Gach(0, 10 + i * canvas.width / 4, 10 + j * canvas.width / 4));
+            list.addLast(new Gach(0, 10 + i * canvas.width / size, 10 + j * canvas.width / size));
         }
     }
+    /*list.at(0).value = 2048;
+    list.at(1).value = 2048;
+    list.at(2).value = 2048;
+    list.at(3).value = 2048;*/
 }
 
 
